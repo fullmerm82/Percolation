@@ -36,8 +36,36 @@ public class Percolation
     }
     public void open(int i, int j){
         //open site (row i, column j) if it is not open already
+        if(isOpen(i, j)){
+        grid[i][j] = true;        
         //union with any adjasent open sites
-        //fill if any adjacent site is full
+                //fill if any adjacent site is full
+
+        if(i!=0){
+            if(isOpen(i-1, j))
+                open.union(findElement(i, j), findElement(i-1, j));
+            if(isFull(i-1,j))
+                full.union(findElement(i, j), findElement(i-1, j));
+        }
+        if(i!=grid.length-1){
+            if(isOpen(i+1, j))
+                open.union(findElement(i, j), findElement(i+1, j));
+            if(isFull(i+1,j))
+                full.union(findElement(i, j), findElement(i+1, j));
+        }
+        if(j!=0){
+            if(isOpen(i, j-1))
+                open.union(findElement(i, j), findElement(i, j-1));
+             if(isFull(i, j-1))
+                full.union(findElement(i, j), findElement(i, j-1));
+        }
+        if(j!=grid.length-1){
+            if(isOpen(i, j+1))
+                open.union(findElement(i, j), findElement(i, j+1));
+            if(isFull(i, j+1))
+                full.union(findElement(i, j), findElement(i, j+1));
+        }
+        }
     }
     public boolean isOpen(int i, int j){
         return grid[i][j];
@@ -49,6 +77,7 @@ public class Percolation
     }
     public boolean percolates(){
         //to do logic here
+        open.connected(open.count()-1, open.count()-2);
         return false;
     }
     private int findElement(int i, int j){
